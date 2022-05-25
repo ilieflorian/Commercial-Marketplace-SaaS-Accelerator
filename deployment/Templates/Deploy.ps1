@@ -196,10 +196,10 @@ $StorageAccountName = "amptmpstorage" + $storagepostfix       #enter storage acc
 
 $ContainerName = "packagefiles" #container name for uploading SQL DB file 
 $BlobName = "blob"
-$resourceGroupForStorageAccount = "amptmpstorage"   #resource group name for the storage account.
+$resourceGroupForStorageAccount = "htne-rg-mnd-saas-marketplace-02-prod"   #resource group name for the storage account.
 
 Write-host "🕒  Creating a temporary resource group and storage account - $resourceGroupForStorageAccount"
-New-AzResourceGroup -Name $resourceGroupForStorageAccount -Location $location -Force
+#New-AzResourceGroup -Name $resourceGroupForStorageAccount -Location $location -Force
 New-AzStorageAccount -ResourceGroupName $resourceGroupForStorageAccount -Name $StorageAccountName -Location $location -SkuName Standard_LRS -Kind StorageV2
 $StorageAccountKey = @((Get-AzStorageAccountKey -ResourceGroupName $resourceGroupForStorageAccount -Name $StorageAccountName).Value)
 $key = $StorageAccountKey[0]
@@ -260,7 +260,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroupForDeployment -Te
 
 Write-host "🧹  Cleaning things up!"
 # Cleanup : Delete the temporary storage account and the resource group created to host the bacpac file.
-Remove-AzResourceGroup -Name $resourceGroupForStorageAccount -Force 
+#Remove-AzResourceGroup -Name $resourceGroupForStorageAccount -Force 
 Remove-Item –path $TempFolderToStoreBacpac –recurse -Force
 Remove-Item -path ["..\..\Publish"] -recurse -Force
 
